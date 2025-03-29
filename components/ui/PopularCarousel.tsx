@@ -12,7 +12,7 @@ import ProductBanner from "../home/popular-product/popular-card";
 
 const banners = banner;
 
-const PopularCar = () => {
+const PopularCarousel = () => {
   return (
     <div className="container">
       <Swiper
@@ -38,4 +38,4 @@ const PopularCar = () => {
   );
 };
 
-export default PopularCar;
+export default PopularCarousel;

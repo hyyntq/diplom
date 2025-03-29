@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Footer = () => {
@@ -95,15 +96,23 @@ const Footer = () => {
           </div>
         </div>
         <div className="flex gap-9">
-          <Image src="/img/Twitter.svg" alt="twitter" width={32} height={32} />
-          <Image src="/img/facebook.svg" alt="twitter" width={32} height={32} />
-          <Image src="/img/TikTok.svg" alt="twitter" width={32} height={32} />
-          <Image
-            src="/img/Instagram.svg"
-            alt="twitter"
-            width={32}
-            height={32}
-          />
+          <Link href='/'>
+            <Image src="/img/Twitter.svg" alt="twitter" width={32} height={32} />
+          </Link>
+          <Link href='/'>
+            <Image src="/img/facebook.svg" alt="twitter" width={32} height={32} />
+          </Link>
+          <Link href='/'>
+            <Image src="/img/TikTok.svg" alt="twitter" width={32} height={32} />
+          </Link>
+          <Link href='/'>
+            <Image
+              src="/img/Instagram.svg"
+              alt="twitter"
+              width={32}
+              height={32}
+            />
+          </Link>
         </div>
       </div>
     </footer>
