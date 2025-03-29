@@ -24,12 +24,14 @@ export interface LoginProps {
   password: string;
 }
 
-export interface ProductCardProps {
+export interface ProductProps {
   id: number;
   title: string;
   price: number;
   thumbnail: string;
   category: string;
+  brand: string;
+  discountPercentage: number
 }
 
 export interface ProductBannerProps {

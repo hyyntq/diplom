@@ -1,10 +1,8 @@
-import Category from '@/components/homePage/categorySection/Category'
-import React from 'react'
+import Category from "@/components/home/category-section/Category";
+import React from "react";
 
 const page = () => {
-  return (
-    <Category/>
-  )
-}
+  return <Category />;
+};
 
-export default page
+export default page;

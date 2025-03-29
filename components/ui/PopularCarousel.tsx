@@ -8,7 +8,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { banner } from "@/data/banner";
-import ProductBanner from "../homePage/popularProduct/popular-card";
+import ProductBanner from "../home/popular-product/popular-card";
 
 const banners = banner;
 

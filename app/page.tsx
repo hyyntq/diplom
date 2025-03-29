@@ -1,10 +1,10 @@
-import FooterBanner from "@/components/homePage/banner-footer/banner-footer";
-import Category from "@/components/homePage/categorySection/Category";
-import Discount from "@/components/homePage/discount-section/discount";
-import HeroBanner from "@/components/homePage/heroBanner/HeroBanner";
-import PopularProducts from "@/components/homePage/popularProduct/popular-banner";
-import ProductSection from "@/components/homePage/productPage/product-section";
-import PromoGrid from "@/components/homePage/promoGrid/PromoGrid";
+import FooterBanner from "@/components/home/footer-section/banner-footer";
+import Category from "@/components/home/category-section/Category";
+import Discount from "@/components/home/discount-section/discount";
+import HeroBanner from "@/components/home/hero-section/HeroBanner";
+import PopularProducts from "@/components/home/popular-product/popular-banner";
+import ProductSection from "@/components/home/product-section/product-section";
+import PromoGrid from "@/components/home/promo-section/promo-grid";
 
 export default async function Home() {
   return (
@@ -15,7 +15,7 @@ export default async function Home() {
       <ProductSection />
       <PopularProducts />
       <Discount />
-      <FooterBanner/>
+      <FooterBanner />
     </>
   );
 }

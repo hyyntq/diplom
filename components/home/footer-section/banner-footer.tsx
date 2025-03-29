@@ -59,40 +59,6 @@ const FooterBanner = () => {
           className="absolute right-0 bottom-[-100px]"
         />
       </div>
-
-      {/* <div className="absolute inset-0 w-full h-full">
-        
-        <Image
-          src="/img/footer/ipad-1.svg"
-          alt="Tablet"
-          width={250}
-          height={250}
-          className="absolute left-10 top-10 sm:left-16 sm:top-16 lg:left-24 lg:top-24 object-contain drop-shadow-xl"
-        />
-        <Image
-          src="/img/footer/ipad-2.svg"
-          alt="Laptop"
-          width={300}
-          height={300}
-          className="absolute left-0 bottom-0 sm:left-8 sm:bottom-8 object-contain drop-shadow-xl"
-        />
-
-        
-        <Image
-          src="/img/footer/element.svg"
-          alt="iPhone"
-          width={250}
-          height={250}
-          className="absolute right-10 top-10 sm:right-16 sm:top-16 lg:right-24 lg:top-24 object-contain drop-shadow-xl"
-        />
-        <Image
-          src="/img/footer/apple-watch.svg"
-          alt="Watch"
-          width={250}
-          height={250}
-          className="absolute right-5 bottom-5 sm:right-10 sm:bottom-10 lg:right-16 lg:bottom-16 object-contain drop-shadow-xl"
-        />
-      </div> */}
     </div>
   );
 };
