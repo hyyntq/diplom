@@ -9,11 +9,11 @@ import { faClock } from "@fortawesome/free-regular-svg-icons";
 
 export const category = [
   {
-    name: "phones",
+    name: "smartphones",
     icon: faMobile,
   },
   {
-    name: "computers",
+    name: "laptop",
     icon: faComputer,
   },
   {

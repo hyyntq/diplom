@@ -1,8 +1,11 @@
-import Category from "@/components/home/category-section/Category";
+
+import Category from "@/components/category/category";
 import React from "react";
 
 const page = () => {
-  return <Category />;
+  return (
+    <Category/>
+  );
 };
 
 export default page;

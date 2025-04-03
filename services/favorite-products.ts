@@ -1,24 +1,24 @@
-import { ProductCardProps } from "@/lib/interface";
+import { ProductProps } from "@/lib/interface";
 
-export const getFavorites = (): ProductCardProps[] => {
+export const getFavorites = (): ProductProps[] => {
   return JSON.parse(localStorage.getItem("favorites") || "[]");
 };
 
-function setLocalStorageFavorite(items: ProductCardProps[]) {
+function setLocalStorageFavorite(items: ProductProps[]) {
   localStorage.setItem("favorites", JSON.stringify(items));
 }
 
-export const addFavorite = async (product: ProductCardProps) => {
+export const addFavorite = async (product: ProductProps) => {
   
   const favorites = getFavorites();
   const updatedFavorites = [...favorites, product];
   setLocalStorageFavorite(updatedFavorites);
 };
 
-export const deleteFavorite = (product: ProductCardProps) => {
+export const deleteFavorite = (product: ProductProps) => {
   const favorites = getFavorites();
   const updatedFavorites = favorites.filter(
-    (favorite: ProductCardProps) => favorite.id !== product.id
+    (favorite: ProductProps) => favorite.id !== product.id
   );
   setLocalStorageFavorite(updatedFavorites);
 };

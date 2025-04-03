@@ -32,6 +32,8 @@ export interface ProductProps {
   category: string;
   brand: string;
   discountPercentage: number
+  stock: number
+  rating: number
 }
 
 export interface ProductBannerProps {
@@ -39,4 +41,10 @@ export interface ProductBannerProps {
   title: string,
   description: string,
   bgColor: string
+}
+
+export interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  setCurrentPage: (page: number) => void;
 }

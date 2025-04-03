@@ -14,12 +14,14 @@ const Category = () => {
     <div className="bg-gray-200 py-20">
       <div className="flex flex-col container mx-auto gap-8">
         <div className="flex">
-          <h1 className="text-3xl font-medium">Browse By Category</h1>
+          <Link href='/category'>
+            <h1 className="text-3xl font-medium">Browse By Category</h1>
+          </Link>
           <div className="flex gap-5 items-center ml-auto text-2xl">
             <Link href="/">
               <FontAwesomeIcon icon={faArrowLeft} />
             </Link>
-            <Link href="/">
+            <Link href="/category">
               <FontAwesomeIcon icon={faArrowRight} />
             </Link>
           </div>

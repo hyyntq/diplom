@@ -5,11 +5,11 @@ import React from 'react'
 
 const LayoutCategory = ({ children }: { readonly children: React.ReactNode }) => {
   return (
-    <div className='flex flex-col container mx-auto gap-40'>
-      <div>
+    <div className='flex flex-col container mx-auto '>
+      <div className=''>
         <Breadcrumbs/>
       </div>
-      <div>{children}</div>
+      <div className='py-20'>{children}</div>
     </div>
   )
 }
