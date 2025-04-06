@@ -6,7 +6,7 @@ import PopularProducts from "@/components/home/popular-product/popular-banner";
 import ProductSection from "@/components/home/product-section/product-section";
 import PromoGrid from "@/components/home/promo-section/promo-grid";
 
-export default async function Home() {
+export default function Home() {
   return (
     <>
       <HeroBanner />

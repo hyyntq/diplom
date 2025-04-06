@@ -1,10 +1,10 @@
 "use client";
 import { ProductProps } from "@/lib/interface";
 import React, { useEffect, useState } from "react";
-import ProductGrid from "../product/product-grid";
 import Filters from "../product/filters";
 import { getProductApi } from "@/services/product";
 import Pagination from "../ui/Pagination";
+import ProductCard from "../product/product-card";
 
 const Iphone = () => {
   const [products, setProducts] = useState<ProductProps[]>([]);
@@ -12,6 +12,7 @@ const Iphone = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [sortBy, setSortBy] = useState<string>("default");
   const [currentPage, setCurrentPage] = useState(1);
+  
 
   useEffect(() => {
     const getProducts = async () => {
@@ -42,7 +43,7 @@ const Iphone = () => {
       <div className="max-w-1/4 w-full ">
         <Filters products={products} onFilterChange={setFilteredProducts} />
       </div>
-      <div className="w-full">
+      <div className="w-full flex flex-col gap-4">
         <div className="flex space-x-3 items-center justify-end">
           <span>Selected products: </span>
           <select
@@ -65,7 +66,14 @@ const Iphone = () => {
             </div>
           ) : (
             <div className="flex flex-col gap-5">
-              <ProductGrid products={paginatedProducts} />
+              <div
+                className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  mx-auto container gap-4  rounded-xl`}
+              >
+                {paginatedProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+
               <div className="mt-auto">
                 <Pagination
                   currentPage={currentPage}

@@ -11,10 +11,13 @@ const Favorites = () => {
 
   useEffect(() => {
     try {
-      setLoading(true);
-      const storedFavorites = getFavorites();
-      setFavorites(storedFavorites);
-      setLoading(false);
+      const getFavoritesItems = async () => {
+        setLoading(true);
+        const storedFavorites = await getFavorites();
+        setLoading(false);
+        setFavorites(storedFavorites);
+      }
+      getFavoritesItems()
     } catch (error) {
       console.log(error);
     }

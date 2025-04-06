@@ -29,11 +29,13 @@ export interface ProductProps {
   title: string;
   price: number;
   thumbnail: string;
+  images: string;
   category: string;
   brand: string;
   discountPercentage: number
   stock: number
   rating: number
+  quantity: number
 }
 
 export interface ProductBannerProps {
@@ -47,4 +49,19 @@ export interface PaginationProps {
   currentPage: number;
   totalPages: number;
   setCurrentPage: (page: number) => void;
+}
+
+
+
+export interface CartItem extends ProductProps {
+  quantity: number;
+}
+
+
+export interface CartContextType {
+  cart: CartItem[];
+  addToCart: (product: ProductProps) => void;
+  removeFromCart: (id: number) => void;
+  updateQuantity: (id: number, quantity: number) => void;
+  getTotal: () => number;
 }

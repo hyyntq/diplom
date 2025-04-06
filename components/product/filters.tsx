@@ -78,7 +78,7 @@ const Filters = ({ products, onFilterChange }: FiltersProps) => {
   }
 
   return (
-    <div className="flex flex-col gap-5 sticky top-[15%] self-start">
+    <div className="flex flex-col gap-5 sticky top-[25%] self-start ">
       <div className="  rounded-xl  flex flex-col gap-5">
         <button
           onClick={() => setIsPriceOpen(!isPriceOpen)}

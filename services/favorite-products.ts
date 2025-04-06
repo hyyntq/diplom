@@ -1,6 +1,6 @@
 import { ProductProps } from "@/lib/interface";
 
-export const getFavorites = (): ProductProps[] => {
+export const getFavorites = () => {
   return JSON.parse(localStorage.getItem("favorites") || "[]");
 };
 
@@ -10,7 +10,7 @@ function setLocalStorageFavorite(items: ProductProps[]) {
 
 export const addFavorite = async (product: ProductProps) => {
   
-  const favorites = getFavorites();
+  const favorites = await getFavorites();
   const updatedFavorites = [...favorites, product];
   setLocalStorageFavorite(updatedFavorites);
 };

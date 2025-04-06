@@ -5,7 +5,7 @@ export const getCart = () => {
 }
 
 function saveLocalStorageCart(items: ProductProps[]) {
-  localStorage.setItem('cart', JSON.stringify(items))
+  localStorage.setItem('Cart', JSON.stringify(items))
 }
 
 export const addToCart = async (products: ProductProps) => {

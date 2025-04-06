@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/layout/header";
 import SubNav from "@/components/layout/subnav";
 import Footer from "@/components/layout/footer";
+import { CartProvider } from "@/data/cart-context";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,12 +19,14 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div className="min-h-screen bg-gray-200 flex flex-col ">
+          <CartProvider>
             <div className="sticky top-0 z-50 ">
               <Header />
               <SubNav />
             </div>
             <main className="flex flex-col grow">{children}</main>
             <Footer />
+          </CartProvider>
         </div>
       </body>
     </html>
