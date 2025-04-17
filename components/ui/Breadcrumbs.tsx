@@ -19,7 +19,7 @@ const Breadcrumbs = () => {
   ];
 
   return (
-    <div className="flex gap-3 text-stone-700 text-xl font-semibold py-11">
+    <div className="flex flex-wrap gap-3 text-stone-700 text-xl font-semibold py-11 ">
       {crumbs.map((crumb, index) => (
         <div key={crumb.href} className="flex gap-3">
           {index < crumbs.length - 1 ? (

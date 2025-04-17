@@ -1,9 +1,10 @@
+import Contact from '@/components/contact/contact';
 import React from 'react'
 
 const page = () => {
   return (
-    <div>contact</div>
-  )
+    <Contact/>
+  );
 }
 
 export default page

@@ -1,9 +1,9 @@
-import ProductPage from '@/components/product/product-page'
+import Payment from '@/components/checkout/payment/payment'
 import React from 'react'
 
 const page = () => {
   return (
-    <ProductPage/>
+    <Payment/>
   )
 }
 

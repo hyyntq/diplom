@@ -4,8 +4,8 @@ import {
   faGamepad,
   faHeadphones,
   faMobile,
+  faTabletAndroid,
 } from "@fortawesome/free-solid-svg-icons";
-import { faClock } from "@fortawesome/free-regular-svg-icons";
 
 export const category = [
   {
@@ -13,12 +13,12 @@ export const category = [
     icon: faMobile,
   },
   {
-    name: "laptop",
+    name: "laptops",
     icon: faComputer,
   },
   {
-    name: "smart-watches",
-    icon: faClock,
+    name: "tablets",
+    icon: faTabletAndroid,
   },
   {
     name: "cameras",

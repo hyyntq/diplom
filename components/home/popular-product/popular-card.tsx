@@ -30,7 +30,7 @@ export default function ProductBanner({
         </p>
         <div>
           <button
-            className={`uppercase border-2  cursor-pointer px-14 py-4 rounded-xl  transition-all duration-400 font-bold tracking-wider ${
+            className={`uppercase border-2  cursor-pointer px-14 py-4 rounded-xl  transition-all duration-400 font-bold tracking-wider text-nowrap ${
               bgColor === "bg-stone-800"
                 ? "text-gray-200 border-gray-200 hover:bg-gray-200  hover:text-stone-800"
                 : "text-stone-800 border-stone-800 hover:bg-stone-800  hover:text-gray-200"

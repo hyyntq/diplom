@@ -1,8 +1,9 @@
+import Shipping from '@/components/checkout/shipping/shipping'
 import React from 'react'
 
 const page = () => {
   return (
-    <div>headphones</div>
+    <Shipping/>
   )
 }
 

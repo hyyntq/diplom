@@ -1,51 +1,57 @@
 "use server";
-import { prevStateLogin, prevStateRegister } from "@/lib/interface";
+
+import {
+  PrevStateRegister,
+  PrevStateLogin,
+  RegisterData,
+  LoginData,
+  StrapiAuthResponse,
+} from "@/lib/interface";
 import { loginService, registerService } from "@/services/auth-service";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-
 import { z } from "zod";
 
 const cookieConfig = {
-  maxAge: 14 * 24 * 3600,
+  maxAge: 14 * 24 * 3600, 
   path: "/",
   domain: "localhost",
   httpOnly: true,
   secure: false,
 };
 
-const messageUsername = "Имя должно содержать от 3 до 20 символов";
-const messagePassword = "Пароль должен содержать от 6 до 100 символов";
-const messageEmail = "введите корректный Email";
-const messageIdentifier =
-  "Имя пользователя должно содержать не менее 3 символов";
+
+const messages = {
+  password: "Пароль должен содержать от 6 до 100 символов",
+  email: "Введите корректный Email",
+  emailExists: "Этот email уже зарегистрирован",
+  userNotFound: "Пользователь с таким логином или email не найден",
+  general: "Что-то пошло не так",
+  successRegister: "Регистрация успешна! Добро пожаловать!",
+  successLogin: "Вход выполнен успешно!",
+};
+
 
 const schemaRegister = z.object({
-  username: z
-    .string()
-    .min(3, {
-      message: messageUsername,
-    })
-    .max(20, {
-      message: messageUsername,
-    }),
-
-  email: z.string().email({
-    message: messageEmail,
-  }),
-
+  username: z.string().min(1, { message: "Введите имя пользователя" }),
+  email: z.string().email({ message: messages.email }),
   password: z
     .string()
-    .min(6, {
-      message: messagePassword,
-    })
-    .max(100, {
-      message: messagePassword,
-    }),
+    .min(6, { message: messages.password })
+    .max(100, { message: messages.password }),
 });
 
+const schemaLogin = z.object({
+  identifier: z.string().min(1, { message: "Введите логин или email" }),
+  password: z
+    .string()
+    .min(6, { message: messages.password })
+    .max(100, { message: messages.password }),
+});
+
+
 export async function registerAction(
-  prevState: prevStateRegister,
+  prevState: PrevStateRegister,
   formData: FormData
 ) {
   const authData = schemaRegister.safeParse({
@@ -58,54 +64,38 @@ export async function registerAction(
     return {
       ...prevState,
       ZodError: authData.error.flatten().fieldErrors,
-      strapiError: null
-    };
-  }
-
-  const response = await registerService(authData.data);
-
-  if (!response) {
-    return {
-      ...prevState,
-      ZodError: null,
       strapiError: null,
-      message: "Что-то пошло не так",
     };
   }
 
-  if (response.error) {
+  const response: StrapiAuthResponse = await registerService(
+    authData.data as RegisterData
+  );
+
+  if (!response || response.error) {
     return {
       ...prevState,
       ZodError: null,
-      strapiError: response.error,
-      message: "Что-то пошло не так",
+      strapiError:
+        response?.error?.message === "Email already exists"
+          ? messages.emailExists
+          : response?.error?.message || null,
+      message: null,
     };
   }
 
   const cookieStore = await cookies();
   cookieStore.set("jwt", response.jwt, cookieConfig);
-  redirect("/");
+  return {
+    ZodError: null,
+    strapiError: null,
+    message: messages.successRegister,
+  };
 }
 
-//LOGIN
-
-const schemaLogin = z.object({
-  identifier: z.string().min(3, {
-    message: messageIdentifier,
-  }),
-
-  password: z
-    .string()
-    .min(6, {
-      message: messagePassword,
-    })
-    .max(100, {
-      message: messagePassword,
-    }),
-});
 
 export async function loginAction(
-  prevState: prevStateLogin,
+  prevState: PrevStateLogin,
   formData: FormData
 ) {
   const authData = schemaLogin.safeParse({
@@ -116,39 +106,34 @@ export async function loginAction(
   if (!authData.success) {
     return {
       ...prevState,
-      ZodError: authData?.error?.flatten(),
+      ZodError: authData.error.flatten().fieldErrors,
       strapiError: null,
     };
   }
 
-  const response = await loginService(authData.data);
+  const response: StrapiAuthResponse = await loginService(
+    authData.data as LoginData
+  );
 
-  if (!response) {
+  if (!response || response.error) {
     return {
       ...prevState,
       ZodError: null,
-      strapiError: null,
-      message: "Что-то пошло не так",
-    };
-  }
-  if (response.error) {
-    return {
-      ...prevState,
-      ZodError: null,
-      strapiError: response.error,
+      strapiError:
+        response?.error?.status === 401
+          ? messages.userNotFound
+          : response?.error?.message || messages.general,
       message: null,
     };
   }
-  
-  
-  const cookieStore = await cookies()
-  cookieStore.set('jwt', response.jwt, cookieConfig)
 
-  redirect("/")
+  const cookieStore = await cookies();
+  cookieStore.set("jwt", response.jwt, cookieConfig);
+  return { ZodError: null, strapiError: null, message: messages.successLogin }; 
 }
 
-export async function logoutButton() {
-  const cookieStore = await cookies()
-  cookieStore.delete('jwt');
-  redirect('/')
+export async function logoutAction() {
+  const cookieStore = await cookies();
+  cookieStore.delete("jwt");
+  redirect("/login");
 }

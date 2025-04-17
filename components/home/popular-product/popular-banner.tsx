@@ -3,8 +3,7 @@ import ProductBanner from "./popular-card";
 import PopularCar from "@/components/ui/PopularCarousel";
 
 export default function PopularProducts() {
-  
-  const banners = banner
+  const banners = banner;
 
   return (
     <div className="container mx-auto w-full">

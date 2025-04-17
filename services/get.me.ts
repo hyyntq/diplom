@@ -27,5 +27,6 @@ export async function getMe() {
     return {ok: true, data, error: null}
   } catch (error) {
     console.log(error);
+    return { ok: true, data: null, error };
   }
 }

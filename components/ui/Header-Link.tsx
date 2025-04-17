@@ -8,7 +8,7 @@ const HeaderLink = () => {
 
   const pathName = usePathname();
   return (
-    <div className="hidden lg:flex items-center justify-center gap-5 flex-nowrap text-lg font-medium ">
+    <nav className="hidden xl:flex items-center justify-center gap-5 flex-nowrap text-lg font-medium ">
       <Link
         href="/"
         className={`header-link ${pathName === "/" ? "header-active" : ""}`}
@@ -37,7 +37,8 @@ const HeaderLink = () => {
       >
         Blog
       </Link>
-    </div>
+      
+    </nav>
   );
 }
 

@@ -1,22 +1,37 @@
 "use client";
 
-import React, { useActionState } from "react";
-import SubmitButton from "./SubmitButton";
+import { PrevStateRegister } from "@/lib/interface";
+import FormLink from "@/components/ui/FormLink";
 import { registerAction } from "@/data/auth-actions";
-import FormLink from "../ui/FormLink";
+import SubmitButton from "./SubmitButton";
+import { useActionState, useEffect } from "react";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
-const INITIAL_STATE = {
-  username: null,
-  password: null,
-  email: null
+const initialState: PrevStateRegister = {
+  ZodError: null,
+  strapiError: null,
+  message: null,
 };
 
-const AuthRegister = () => {
-  const [formState, formAction] = useActionState(registerAction, INITIAL_STATE);
+export default function Register() {
+  const [state, formAction] = useActionState(registerAction, initialState);
+
+  useEffect(() => {
+    if (state.message === "Регистрация успешна! Добро пожаловать!") {
+      toast(`Successful Register`, {
+        action: {
+          label: "Ok",
+          onClick: () => console.log("undo"),
+        },
+      });
+      setTimeout(() => redirect("/"), 1000); 
+    }
+  }, [state.message]);
 
   return (
     <div className="max-w-md w-full bg-stone-800 py-12 px-13 text-zinc-300 rounded-xl shadow-xl">
-      <form action={formAction} className="flex flex-col gap-10 ">
+      <form action={formAction} className="flex flex-col gap-10">
         <FormLink />
 
         <div className="flex flex-col gap-6">
@@ -31,7 +46,13 @@ const AuthRegister = () => {
               id="username"
               name="username"
             />
+            {state.ZodError?.username && (
+              <p className="text-red-500 text-sm mt-1">
+                {state.ZodError.username[0]}
+              </p>
+            )}
           </div>
+
           <div>
             <label htmlFor="email" className="auth-label">
               Email
@@ -43,7 +64,13 @@ const AuthRegister = () => {
               id="email"
               name="email"
             />
+            {state.ZodError?.email && (
+              <p className="text-red-500 text-sm mt-1">
+                {state.ZodError.email[0]}
+              </p>
+            )}
           </div>
+
           <div>
             <label htmlFor="password" className="auth-label">
               Password
@@ -55,12 +82,23 @@ const AuthRegister = () => {
               id="password"
               name="password"
             />
+            {state.ZodError?.password && (
+              <p className="text-red-500 text-sm mt-1">
+                {state.ZodError.password[0]}
+              </p>
+            )}
           </div>
         </div>
 
+        {state.strapiError && (
+          <p className="text-red-500 text-sm text-center">
+            {state.strapiError}
+          </p>
+        )}
+
         <div className="divider" />
 
-        <div className="text-center p-3 rounded-xl cursor-pointer transition  bg-stone-400 text-stone-200 hover:opacity-80 duration-300">
+        <div className="text-center p-3 rounded-xl cursor-pointer transition bg-stone-400 text-stone-200 hover:opacity-80 duration-300">
           <SubmitButton
             text="Register"
             className="cursor-pointer uppercase font-bold text-xl rounded-xl w-full"
@@ -69,6 +107,4 @@ const AuthRegister = () => {
       </form>
     </div>
   );
-};
-
-export default AuthRegister;
+}

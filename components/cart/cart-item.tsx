@@ -1,15 +1,8 @@
 import Image from "next/image";
-import { ProductProps, CartItem } from "@/lib/interface";
+import { ProductCardProps } from "@/lib/interface";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
-interface ProductCardProps {
-  product: ProductProps;
-  cart: CartItem[];
-  addToCart?: (product: ProductProps) => void;
-  updateQuantity?: (id: number, quantity: number) => void;
-  removeFromCart?: (id: number) => void;
-}
 
 export const CartItems = ({
   product,
@@ -17,52 +10,53 @@ export const CartItems = ({
   removeFromCart,
 }: ProductCardProps) => {
   return (
-    <div
-      className="p-4 
-          flex items-center justify-between  
-          text-center bg-stone-400 rounded-xl"
-    >
-      <div className="flex items-center gap-4 max-w-64">
-        <div className="relative w-30 h-30 flex-shrink-0">
+    <div className="p-4 flex items-center  bg-stone-300 rounded-xl 6">
+      <div className="flex items-center gap-4 ">
+        <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0">
           <Image
-            src={`${
-              product.images[1]
-                ? `${product.images[1]}`
-                : `${product.images[0]}`
-            } `}
+            src={product.images[1] ? product.images[1] : product.images[0]}
             alt={product.title}
             fill
             className="object-contain"
           />
         </div>
-        <div className={"mt-2"}>
-          <h3 className="text-lg font-semibold">{product.title}</h3>
-        </div>
       </div>
 
-      <div className="flex items-center gap-4">
-        <button
-          onClick={() => updateQuantity?.(product.id, product.quantity - 1)}
-          className="px-3 py-1  outline outline-stone-800 text-stone-800 rounded-xl cursor-pointer hover:bg-stone-800 hover:text-gray-200 transition duration-300 text-xl flex items-center justify-center"
-        >
-          -
-        </button>
-        <span className="text-2xl">{product.quantity}</span>
-        <button
-          onClick={() => updateQuantity?.(product.id, product.quantity + 1)}
-          className="px-3 py-1  outline outline-stone-800 text-stone-800 rounded-xl cursor-pointer hover:bg-stone-800 hover:text-gray-200 transition duration-300 text-xl flex items-center justify-center"
-        >
-          +
-        </button>
-      </div>
-      <div className="flex gap-6 items-center">
-        <p className="text-xl font-bold">${product.price}</p>
-        <button
-          onClick={() => removeFromCart?.(product.id)}
-          className="bg-stone-800 text-gray-200 cursor-pointer  rounded-xl px-3 py-2 text-2xl "
-        >
-          <FontAwesomeIcon icon={faXmark} className="text-center w-6 h-6" />
-        </button>
+      <div className="flex flex-col sm:flex-row justify-between flex-1 gap-2">
+
+        <div className="flex flex-col gap-1">
+          <h3 className="text-lg font-semibold w-32 sm:w-40 truncate">
+            {product.title}
+          </h3>
+          <p className="text-stone-800 text-sm">#{product.sku}</p>
+        </div>
+
+        <div className="flex justify-between gap-10">
+          <div className="flex items-center gap-2 sm:justify-center w-32">
+            <button
+              onClick={() => updateQuantity?.(product, product.quantity - 1)}
+              className="w-8 h-8 outline outline-stone-800 text-stone-800 rounded-xl cursor-pointer hover:bg-stone-800 hover:text-gray-200 transition duration-300 text-xl flex items-center justify-center"
+            >
+              -
+            </button>
+            <span className="text-xl w-6 text-center">{product.quantity}</span>
+            <button
+              onClick={() => updateQuantity?.(product, product.quantity + 1)}
+              className="w-8 h-8 outline outline-stone-800 text-stone-800 rounded-xl cursor-pointer hover:bg-stone-800 hover:text-gray-200 transition duration-300 text-xl flex items-center justify-center"
+            >
+              +
+            </button>
+          </div>
+          <div className="flex gap-10 items-center">
+            <p className="text-xl font-bold w-16">${product.price}</p>
+            <button
+              onClick={() => removeFromCart?.(product)}
+              className="w-9 h-9 bg-stone-800 text-gray-200 cursor-pointer rounded-xl flex items-center justify-center"
+            >
+              <FontAwesomeIcon icon={faXmark} className="w-9 h-9" />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

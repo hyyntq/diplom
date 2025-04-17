@@ -1,5 +1,12 @@
-import { ProductProps } from "./interface";
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
 
-export function setLocalStorage(name: string, items: ProductProps[]) {
-  localStorage.setItem(`"${name}"`, JSON.stringify(items));
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
 }
+
+export const generateSlug = (title: string) =>
+  title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");

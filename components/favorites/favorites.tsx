@@ -1,44 +1,25 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
+import React from "react";
+import { useFavorite } from "@/lib/context/favorite-context";
 import ProductCard from "../product/product-card";
-import { getFavorites } from "@/services/favorite-products";
-import { ProductProps } from "@/lib/interface";
-import Loading from "../loading/loading";
 
-const Favorites = () => {
-  const [favorites, setFavorites] = useState<ProductProps[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+// Мок продуктов (замени на реальные данные, если есть)
 
-  useEffect(() => {
-    try {
-      const getFavoritesItems = async () => {
-        setLoading(true);
-        const storedFavorites = await getFavorites();
-        setLoading(false);
-        setFavorites(storedFavorites);
-      }
-      getFavoritesItems()
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+export default function Favorites() {
+  const { favorites } = useFavorite();
 
-  if (loading) {
-    return <Loading />;
-  }
+  // Имитация загрузки (можно убрать, если не нужно)
 
   return (
-    <div className="container mx-auto py-11 flex flex-col gap-8 ">
-      <span className="font-bold text-3xl text-center">FAVORITES PRODUCTS</span>
-    
+    <div className="container mx-auto py-11 flex flex-col gap-8">
+      <span className="font-bold text-3xl text-center">FAVORITE PRODUCTS</span>
+
       {favorites.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {favorites
             .map((favorite, index) => (
-              <div
-                key={index}
-                className="bg-stone-300 rounded-xl flex items-center justify-center"
-              >
+              <div key={index}>
                 <ProductCard product={favorite} />
               </div>
             ))
@@ -51,6 +32,4 @@ const Favorites = () => {
       )}
     </div>
   );
-};
-
-export default Favorites;
+}

@@ -9,7 +9,6 @@ import { category } from "@/data/category";
 const SubNav = () => {
   const pathName = usePathname();
   const categories = category
-
   return (
     <div className="bg-stone-800 w-full p-4 hidden lg:flex">
       <div className="flex container mx-auto justify-between text-zinc-200">

@@ -8,6 +8,7 @@ export const banner: ProductBannerProps[] = [
       "iPad combines a magnificent 10.2-inch Retina display, incredible performance, multitasking and ease of use.",
     bgColor: "bg-stone-300",
   },
+  
   {
     img: "/img/ipad.svg",
     title: "Ipad Pro",

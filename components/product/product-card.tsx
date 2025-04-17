@@ -1,48 +1,40 @@
 "use client";
 
-import Heart from "@/components/icons/heart";
 import { ProductProps } from "@/lib/interface";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHeartCirclePlus,
+  faHeartCircleXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import {
-  addFavorite,
-  deleteFavorite,
-  getFavorites,
-} from "@/services/favorite-products";
+import React, { useCallback } from "react";
 import Link from "next/link";
-import { useCart } from "@/data/cart-context";
+import { useCart } from "@/lib/context/cart-context";
+import { useFavorite } from "@/lib/context/favorite-context";
 
 interface ProductCardProps {
   product: ProductProps;
   isInCartPage?: boolean;
 }
 
-const ProductCard = ({ product, isInCartPage = false }: ProductCardProps) => {
-  const [isFavorite, setIsFavorite] = useState(false);
+const ProductCard = ({ product }: ProductCardProps) => {
   const { cart, addToCart, updateQuantity } = useCart();
   const cartItem = cart.find((item) => item.id === product.id);
-
+  const { addToFavorites, removeFromFavorites, isFavorite } = useFavorite();
   
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const storedFavorites = await getFavorites();
-      setIsFavorite(
-        storedFavorites.some((item: ProductProps) => item.id === product.id)
-      );
-    };
-    fetchProducts();
-  }, [product.id]);
+  // Проверяем, является ли продукт любимым
+  const favoriteStatus =
+    typeof isFavorite === "function" ? isFavorite(product.id) : false;
 
-  function toggleFavorite() {
-    if (isFavorite) {
-      deleteFavorite(product);
+  // Функция переключения статуса любимого продукта
+  const toggleFavorite = useCallback(() => {
+    if (!isFavorite) return; // Защита от undefined
+    if (favoriteStatus) {
+      removeFromFavorites(product.id);
     } else {
-      addFavorite(product);
+      addToFavorites(product);
     }
-    setIsFavorite(!isFavorite);
-  }
+  }, [favoriteStatus, product, addToFavorites, removeFromFavorites, isFavorite]);
 
   const generateSlug = (title: string) => {
     return title
@@ -52,23 +44,25 @@ const ProductCard = ({ product, isInCartPage = false }: ProductCardProps) => {
   };
 
   return (
-    //
-    <div className="relative rounded-lg py-6 px-4 text-center  flex flex-col gap-4 bg-stone-300">
+    <div className="relative rounded-lg py-6 px-4 text-center  flex flex-col gap-4 bg-stone-300 ">
       <button
         className=" cursor-pointer ml-auto w-8 h-8"
         onClick={() => toggleFavorite()}
       >
-        {isFavorite ? (
+        {favoriteStatus ? (
           <FontAwesomeIcon
-            icon={faHeart}
-            className="text-red-500 text-[32px]"
+            icon={faHeartCircleXmark}
+            className="text-red-500 text-3xl"
           />
         ) : (
-          <Heart size={32} fill="gray" />
+          <FontAwesomeIcon icon={faHeartCirclePlus} className="text-3xl" />
         )}
       </button>
+
       <Link
-        href={`/category/${product.category}/${generateSlug(product.title)}`}
+        href={`/category/${
+          product.category
+        }/${product.brand.toLowerCase()}/${generateSlug(product.title)}`}
       >
         <Image
           src={product.images[1]}
@@ -78,28 +72,28 @@ const ProductCard = ({ product, isInCartPage = false }: ProductCardProps) => {
           className="w-full h-56 object-contain mb-4 grow"
         />
       </Link>
-      <h3 className="text-lg font-medium text-stone-800 mb-2 line-clamp-2">
-        {product.title}
-      </h3>
-      <p className="text-2xl font-bold text-stone-800 mb-4 grow">
-        {product.price} $
-      </p>
-      <div
-        className={`flex items-center gap-2 ${
-          isInCartPage ? "" : "justify-center mt-2"
-        }`}
-      >
+
+      <div className="flex flex-col grow">
+        <h3 className="text-lg font-medium text-stone-800 mb-2 line-clamp-2">
+          {product.title}
+        </h3>
+        <p className="text-2xl font-bold text-stone-800 mb-4 ">
+          {product.price} $
+        </p>
+      </div>
+
+      <div className="flex items-center gap-2 justify-center mt-auto">
         {cartItem ? (
           <div className="px-14 py-4 flex gap-5 items-center ">
             <button
-              onClick={() => updateQuantity(product.id, cartItem.quantity - 1)}
+              onClick={() => updateQuantity(product, cartItem.quantity - 1)}
               className="px-3 py-1 border-2 text-stone-800 rounded cursor-pointer border-stone-800 hover:bg-stone-800 hover:text-gray-200 transition duration-300"
             >
               -
             </button>
             <span className="text-2xl font-semibold">{cartItem.quantity}</span>
             <button
-              onClick={() => updateQuantity(product.id, cartItem.quantity + 1)}
+              onClick={() => updateQuantity(product, cartItem.quantity + 1)}
               className="px-3 py-1  border-2 border-stone-800 text-stone-800 rounded cursor-pointer hover:bg-stone-800 hover:text-gray-200 transition duration-300"
             >
               +
@@ -107,8 +101,10 @@ const ProductCard = ({ product, isInCartPage = false }: ProductCardProps) => {
           </div>
         ) : (
           <button
-            onClick={() => addToCart(product)}
-            className="uppercase border-2 border-stone-800 cursor-pointer px-14 py-4 rounded-xl text-stone-800 hover:bg-stone-800  hover:text-slate-200 transition-all duration-400 font-bold tracking-wider"
+            onClick={() => {
+              addToCart(product);
+            }}
+            className="btn-card"
           >
             Buy Now
           </button>

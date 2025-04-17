@@ -1,41 +1,45 @@
-import { LoginProps, RegisterProps } from "@/lib/interface";
+import { RegisterData, LoginData, StrapiAuthResponse } from "@/lib/interface";
 
-const baseURL: string = "http://localhost:1337"
+const baseURL = "http://localhost:1337";
 
-export async function registerService(userData: RegisterProps) {
-  const url = new URL("/api/auth/local/register", baseURL);
-
+export async function registerService(
+  data: RegisterData
+): Promise<StrapiAuthResponse> {
   try {
-    const response = await fetch(url, {
+    const response = await fetch(`${baseURL}/api/auth/local/register`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({... userData})
-    })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
 
-    return response.json()
-
+    return await response.json();
   } catch (error) {
-    console.log(error);
+    console.error("Register error:", error);
+    return {
+      jwt: "",
+      user: { id: 0, username: "", email: "" },
+      error: { message: "Failed to register" },
+    };
   }
 }
 
-export async function loginService(userData: LoginProps) {
-  const url = new URL("/api/auth/local", baseURL);
-
+export async function loginService(
+  data: LoginData
+): Promise<StrapiAuthResponse> {
   try {
-    const response = await fetch(url, {
+    const response = await fetch(`${baseURL}/api/auth/local`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({... userData})
-    })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
 
-    return response.json()
-
+    return await response.json();
   } catch (error) {
-    console.log(error);
+    console.error("Login error:", error);
+    return {
+      jwt: "",
+      user: { id: 0, username: "", email: "" },
+      error: { message: "Failed to login" },
+    };
   }
 }

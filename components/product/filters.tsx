@@ -5,10 +5,10 @@ import React, { useEffect, useState } from "react";
 interface FiltersProps {
   products: ProductProps[];
   onFilterChange: (filteredProducts: ProductProps[]) => void;
+  setFilters: () => void
 }
 
-const Filters = ({ products, onFilterChange }: FiltersProps) => {
-
+const Filters = ({ products, onFilterChange, setFilters }: FiltersProps) => {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 3000])
   const [selectedBrands, setSelectedBrands] = useState<string[]>([])
   const [brandSearch, setBrandSearch] = useState<string>("");
@@ -78,7 +78,8 @@ const Filters = ({ products, onFilterChange }: FiltersProps) => {
   }
 
   return (
-    <div className="flex flex-col gap-5 sticky top-[25%] self-start ">
+    <div className="flex flex-col gap-5 sticky md:top-[25%] md:self-start">
+    
       <div className="  rounded-xl  flex flex-col gap-5">
         <button
           onClick={() => setIsPriceOpen(!isPriceOpen)}
@@ -145,7 +146,7 @@ const Filters = ({ products, onFilterChange }: FiltersProps) => {
           <span>{isBrandOpen ? "▲" : "▼"}</span>
         </button>
         {isBrandOpen && (
-          <div>
+          <div className="flex flex-col gap-4">
             <input
               type="text"
               placeholder="Search"
@@ -153,7 +154,7 @@ const Filters = ({ products, onFilterChange }: FiltersProps) => {
               onChange={(e) => setBrandSearch(e.target.value)}
               className="w-full p-2 border rounded mb-2"
             />
-            <div className="max-h-40 overflow-y-auto">
+            <div className="max-h-40 overflow-y-auto px-1">
               {filteredBrands.map((brand) => (
                 <div key={brand} className="flex items-center mb-2">
                   <input
@@ -172,12 +173,19 @@ const Filters = ({ products, onFilterChange }: FiltersProps) => {
         )}
       </div>
 
-      <button
-        onClick={() => resetFilter()}
-        className=" cursor-pointer px-4 py-2 border-4 border-stone-800 rounded-full text-stone-800 text-xl font-medium uppercase hover:bg-stone-800 hover:text-gray-200 transition duration-300"
-      >
-        Reset
-      </button>
+      <div className="flex w-full gap-8">
+        <button
+          onClick={() => resetFilter()}
+          className=" cursor-pointer px-4 py-4 border-2 border-stone-800 rounded-full text-stone-800 text-xl font-medium uppercase hover:bg-stone-800 hover:text-gray-200 transition duration-300 w-full"
+        >
+          Reset
+        </button>
+        <button className=" md:hidden cursor-pointer px-4 py-4 border-2 bg-stone-800 rounded-full text-gray-200 text-xl font-medium uppercase hover:bg-stone-800 hover:text-gray-200 transition duration-300 w-full"
+          onClick={() => setFilters()}
+        >
+          Apply
+        </button>
+      </div>
     </div>
   );
 };

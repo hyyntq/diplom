@@ -4,9 +4,7 @@ import React from "react";
 const PromoGrid = () => {
   return (
     <div className="grid lg:grid-cols-2 grid-cols-1">
-      {/* 1 часть */}
       <div className="grid md:grid-cols-2 md:grid-rows-2 ">
-        {/* плойка */}
         <div className="md:relative md:col-span-2 bg-stone-300 md:grid overflow-hidden flex flex-col items-center justify-center py-10 px-4 md:p-0 gap-6 md:gap-0">
           <Image
             src="/img/playstation.svg"
@@ -30,8 +28,6 @@ const PromoGrid = () => {
           </div>
         </div>
 
-        {/* наушники */}
-
         <div className="md:relative bg-stone-300 flex flex-col md:flex-row items-center justify-end overflow-hidden py-10 px-4 md:p-0 gap-6 md:gap-0">
           <div className="md:absolute md:inset-0 flex  items-center justify-center">
             <Image
@@ -53,8 +49,6 @@ const PromoGrid = () => {
             </p>
           </div>
         </div>
-
-        {/* вр */}
 
         <div className="md:relative bg-stone-400 flex flex-col md:flex-row overflow-hidden items-center justify-center py-10 px-4 md:p-0 gap-6 md:gap-0">
           <div className="md:absolute inset-0 flex items-center">
@@ -79,8 +73,6 @@ const PromoGrid = () => {
         </div>
       </div>
 
-      {/* макбук */}
-
       <section className="relative flex items-center bg-stone-300 py-50 px-14 overflow-hidden">
         <div className="z-1 flex-1 max-w-md flex flex-col gap-5">
           <div className="flex flex-col gap-4">
@@ -94,7 +86,7 @@ const PromoGrid = () => {
           </div>
 
           <div>
-            <button className="uppercase border-2 border-stone-800 cursor-pointer px-14 py-4 rounded-xl text-stone-800 hover:bg-stone-800  hover:text-slate-200 transition-all duration-400 font-bold tracking-wider">
+            <button className="btn-card">
               Shop Now
             </button>
           </div>
